@@ -14,6 +14,7 @@ import { cn } from "@/lib/utils";
 import { Accordion, AccordionContent } from "@/components/ui/accordion";
 import { AccordionItem, AccordionTrigger } from "@radix-ui/react-accordion";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export type Organization ={
     id:string;
@@ -119,5 +120,16 @@ return(
 );
 };
 
+
+NavItems.Skeleton = function SkeletonNavItems(){
+  return(
+    <div className="flex items-center gap-x-2">
+      <div className="w-10 h-10 relative shrink-0">
+        <Skeleton className="h-full w-full absolute"/>
+      </div>
+      <Skeleton className="h-10 w-full"/>
+    </div>
+  );
+};
 
 

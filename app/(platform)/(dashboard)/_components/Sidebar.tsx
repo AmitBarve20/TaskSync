@@ -50,7 +50,18 @@ export const Sidebar = ({ storageKey = "t-sidebar-state" }: SidebarProps) => {
   if (!isLoadedOrg || !isLoadedOrgList || userMemberships.isLoading) {
     return (
       <>
-        <Skeleton />
+      <div className="flex items-center justify-between mb-2">   
+      
+      
+        <Skeleton className="h-10 w-[50%]"/>
+        <Skeleton className="h-10 w-10"/>
+         </div>
+         <div className="space-y-2">
+          <NavItems.Skeleton/>
+          <NavItems.Skeleton/>
+          <NavItems.Skeleton/>
+
+         </div>
       </>
     );
   }

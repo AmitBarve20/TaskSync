@@ -23,8 +23,9 @@ const MarketingPage=()=>{
     <div className="text-3xl md:text-6xl bg-gradient-to-r from-fuchsia-600 to-pink-600 text-white px-4 p-2 rounded-md pb-4 w-fit"> work forward</div>
     </div>
     <div className="text-sm md:text-xl text-neutral-400 mt-4 max-w-xs ms:max-w-2xl text-centre mx-auto">
-      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quaerat tempora reprehenderit veritatis delectus, enim optio facilis commodi. Velit cum quis unde, voluptas enim voluptates natus odit laborum, totam, quibusdam porro?
+    Organize, Prioritize, Achieve!
     </div>
+    <div className="text-sm md:text-xl max-w-md text-center mt-2"> Taskify is a powerful task management tool designed for businesses to streamline workflows, boost productivity, and foster collaboration. </div>
     <Button className="mt-6" size="lg" asChild>
       <Link href="sign-in">get taskify for free </Link>
     </Button>
