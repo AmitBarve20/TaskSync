@@ -2,29 +2,18 @@
 // import { auth } from "@clerk/nextjs/server";
 
 import { Navbar } from "../../_components/navbar";
-import {db } from "@/lib/db"
+
 import TaskBoard from "@/app/(platform)/(dashboard)/organization/[organizationID]/TaskBoard"
 import BoardApp from "@/app/(platform)/(dashboard)/organization/[organizationID]/BoardApp"
+import { create } from "@/actions/create-board";
+import { Button } from "@/components/ui/button";
 
 
-const OrganizationIdPage=() =>{
 
-    async function create(formData: FormData) {
-        "use server";
-
-        const title = formData.get("title") as string
-
-        await db.board.create({
-            data:{
-                title,
-            }
-        })
-    }
-
-
+const OrganizationIdPage = () => {
     return (
-        <>
-        {/* <div>
+        
+        <div>
         <form action={create}>
         <input
         id="title"
@@ -33,17 +22,10 @@ const OrganizationIdPage=() =>{
         placeholder="Enter a board title"
         className="border-black border p-1"
         />
+        <Button type="submit"> Submit</Button>
         </form>
-         </div> */}
-        
-         {/* <TaskBoard/> */}
-
-         <div style={{backgroundColor: '#c6daf8',}}>
-            <BoardApp/>
-
          </div>
-         
-        </>
+        
     );
 };
 
