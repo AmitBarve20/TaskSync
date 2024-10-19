@@ -31,7 +31,7 @@ export const useAction = <TInput, TOutput>(
           if(!result){
             return;
           }
-          if(result.fieldErrors){
+         
             setFieldErrors(result.fieldErrors);
 
             if(result.error){
@@ -44,11 +44,21 @@ export const useAction = <TInput, TOutput>(
               }
             }
           }
-        }
+        
+
+
         finally{
             setIsLoading(false);
             options.onComplete?.();
         }
       }
-    )
+    );
+
+    return {
+      execute,
+      fieldErrors,
+      error,
+      data, 
+      isloading,
+    }
 };

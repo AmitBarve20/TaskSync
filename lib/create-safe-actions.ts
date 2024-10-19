@@ -1,4 +1,7 @@
+import { TIMEOUT } from "dns";
+import { title } from "process";
 import { z } from "zod";
+
 export type FieldErrors<T> = {
 [K in keyof T]?: string [];
 };
@@ -14,9 +17,11 @@ export const createSafeAction = <TInput, TOutput>(
     schema: z.Schema<TInput>,
     handler: (validatedData: TInput) => Promise<ActionState<TInput,TOutput>>) => {
     return async (data: TInput): Promise<ActionState<TInput , TOutput >> => {
+       
+        const validationResult = schema.safeParse(data);
         if(!validationResult.success){
             return {
-                fieldErrors : validationResult.error.flttern().fieldErrors as FieldErrors <TInput>,
+                fieldErrors : validationResult.error.flatten().fieldErrors as FieldErrors <TInput>,
             };
                 }
 
