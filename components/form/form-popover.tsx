@@ -11,6 +11,8 @@ import { createBoard } from "@/actions/create-board";
 import { FormInput } from "./form-input"; // Assuming this is the correct import
 import { FormSubmit } from "./form-submit";
 import React from "react";
+import { toast } from "sonner";
+import { FormPicker } from "./form-picker";
 
 interface FormPopoverProps {
   children: React.ReactNode; // Corrected from `childern` to `children`
@@ -28,9 +30,11 @@ export const FormPopover = ({
   const { execute, fieldErrors } = useAction(createBoard, {
     onSuccess: (data) => {
       console.log({ data });
+      toast.success("Board Created")
     },
     onError: (error) => {
       console.log({ error });
+      toast.error(error);
     }
   });
 
@@ -51,7 +55,11 @@ export const FormPopover = ({
 
         <form className="space-y-4" onSubmit={onSubmit}>
           <div className="space-y-4">
-            <FormInput id="title" label="Board title" type="text" />
+            <FormPicker
+            id="images"
+            errors={fieldErrors}
+            ></FormPicker>
+            <FormInput id="title" label="Board title" type="text" errors={fieldErrors} />
           </div>
           <FormSubmit className="w-full">Create</FormSubmit>
         </form>
