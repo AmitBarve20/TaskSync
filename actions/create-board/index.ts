@@ -6,15 +6,40 @@ import { db } from "@/lib/db";
 import { revalidatePath } from "next/cache";
 import { createSafeAction } from "@/lib/create-safe-actions";
 import { CreateBoard } from "./schema";
+
+
 const handler = async (data: InputType): Promise<ReturnType> => {
-const { userId } = auth();
-if (!userId) {
+const { userId, orgId } = auth();
+if (!userId || !orgId ) {
 return {
 error: "Unauthorized",
 };
 }
 
-const {title} = data;
+const {title, image} = data;
+
+const [
+    imageId,
+    imageThumbUrl,
+    imageFullUrl,
+    imageLinkHTML,
+    imageUserName
+] = image.split("|")
+
+console.log({
+    imageId,
+    imageThumbUrl,
+    imageFullUrl,
+    imageLinkHTML,
+    imageUserName
+})
+
+if (!imageId || !imageFullUrl || !imageLinkHTML || imageThumbUrl || imageUserName){
+    return{
+        error: "Missisng Fields. Failed To Create Board."
+    }
+}
+
 
 let board ; 
 
@@ -22,6 +47,13 @@ try {
     board = await db.board.create({
         data: {
             title,
+            orgId,
+            imageId,
+            imageThumbUrl,
+            imageFullUrl,
+            imageUserName,
+            imageLinkHTML,
+
         }
     });
 }

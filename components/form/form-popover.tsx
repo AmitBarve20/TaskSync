@@ -10,27 +10,35 @@ import { useAction } from "@/hooks/use-action";
 import { createBoard } from "@/actions/create-board";
 import { FormInput } from "./form-input"; // Assuming this is the correct import
 import { FormSubmit } from "./form-submit";
-import React from "react";
+import { X } from "lucide-react";
+import React, { ElementRef, useRef } from "react";
 import { toast } from "sonner";
 import { FormPicker } from "./form-picker";
+import { PopoverClose } from "@radix-ui/react-popover";
+import { Button } from "../ui/button";
 
 interface FormPopoverProps {
   children: React.ReactNode; // Corrected from `childern` to `children`
-  side?: "left" | "right" | "top" | "bottom";
+  side?: "left"|"right"|"top"|"bottom";
   align?: "start" | "center" | "end";
   sideOffset?: number;
 }
 
 export const FormPopover = ({
   children,
-  side = "bottom",
+  side = "right",
   align,
   sideOffset = 0
 }: FormPopoverProps) => {
+
+  const closeRef = useRef<ElementRef<"button">>(null);
+
   const { execute, fieldErrors } = useAction(createBoard, {
     onSuccess: (data) => {
       console.log({ data });
       toast.success("Board Created")
+      closeRef.current?.click();
+      
     },
     onError: (error) => {
       console.log({ error });
@@ -42,7 +50,8 @@ export const FormPopover = ({
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const title = formData.get("title") as string;
-    execute({ title });
+    const image = formData.get("image") as string;
+    execute({ title, image});
   };
 
   return (
@@ -52,6 +61,14 @@ export const FormPopover = ({
         <div className="text-sm font-medium text-center text-neutral-600 pb-4">
           Create Board
         </div>
+        <PopoverClose ref={closeRef} asChild>
+          <Button
+          className="h-auto w-auto p-2 absolute top-2 right-2 text-neutral-600"
+          variant="ghost"
+          >
+            <X className="h-4 w-4"/>
+          </Button>
+        </PopoverClose>
 
         <form className="space-y-4" onSubmit={onSubmit}>
           <div className="space-y-4">
